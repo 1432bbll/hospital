@@ -1,0 +1,338 @@
+@startuml UML
+
+class address
+{
+    -line1:string
+	-line2:string
+    -city:string
+    -state:string
+    -pinCode:string
+    -country:string
+    +address()
+    +takeInput():void
+    +print():void
+    +addToStr():string
+    +strToAdd(string str):void
+}
+
+class ambulance
+{
+    -id:int
+    -model:string
+    -manufacturer:string
+    -vrn :string
+    -idle:bool
+    +ambulance()
+    +fillMap():void
+    +saveMap():void
+    +addAmbulance():void
+    +printDetails():void
+    +printDetailsFromHistory(string):void
+    +getDetails(int):void
+    +getDetailsFromHistory():void
+    +send():void
+    +reportArrival():void
+    +removeAmbulance():void
+}
+note left of ambulance::"fillMap()"
+    read database.
+end note
+note left of ambulance::"saveMap()"
+    write database.
+end note
+note left of ambulance::"addAmbulance()"
+    write database.
+end note
+note left of ambulance::"printDetailsFromHistory(string)"
+    read database.
+end note
+
+class appointment
+{
+    -id:int
+    -hh:int
+    +appointment()
+    +~appointment()
+    +fillMap():void
+    +saveMap():void
+    +printDetails():void
+    +book():void
+    +fillDetails():void
+    +getDetails():void
+}
+note left of appointment::"fillMap()"
+    read database.
+end note
+note left of appointment::"saveMap()"
+    write database.
+end note
+
+class doctor
+{
+    -type:string
+    -appointmentsBooked:int
+    +doctor()
+    +fillMap():void
+    +saveMap():void
+    +addPerson():void
+    +printDetails():void
+    +printDetailsFromHistory(string):void
+    +getDetails(int):void
+    +getDetailsFromHistory():void
+    +removePerson():void
+    +giveMedicine():void
+}
+note right of doctor::"fillMap()"
+    read database.
+end note
+note right of doctor::"saveMap()"
+    write database.
+end note
+note right of doctor::"addPerson()"
+    write database.
+end note
+note right of doctor::"printDetailsFromHistory(string)"
+    read database.
+end note
+
+class driver
+{
+    -licenseNumber:string
+    -idle:bool
+    +driver()
+    +fillMap():void
+    +saveMap():void
+    +addPerson():void
+    +printDetails():void
+    +printDetailsFromHistory(string):void
+    +getDetails(int):void
+    +getDetailsFromHistory():void
+    +removePerson():void
+}
+note left of driver::"fillMap()"
+    read database.
+end note
+note left of driver::"saveMap()"
+    write database.
+end note
+note left of driver::"addPerson()"
+    write database.
+end note
+note left of driver::"printDetailsFromHistory(string)"
+    read database.
+end note
+
+class nurse
+{
+    -type:string
+    +nurse()
+    +fillMap():void
+    +saveMap():void
+    +addPerson():void
+    +printDetails():void
+    +printDetailsFromHistory(string):void
+    +getDetails(int):void
+    +getDetailsFromHistory():void
+    +removePerson():void
+}
+note left of nurse::"fillMap()"
+    read database.
+end note
+note left of nurse::"saveMap()"
+    write database.
+end note
+note left of nurse::"addPerson()"
+    write database.
+end note
+note left of nurse::"printDetailsFromHistory(string)"
+    read database.
+end note
+
+class patient
+{
+    -height:int
+    -weight:int
+    -hospitalized:bool
+    -alive:bool
+    +patient()
+    +fillMap():void
+    +saveMap():void
+    +addallergy():void
+    +searchallergy():void
+    +addPerson():void
+    +printDetails():void
+    +printDetailsFromHistory(string):void
+    +getDetails(int):void
+    +getDetailsFromHistory():void
+    +hospitalize():void
+    +writemedicalhistory():void
+    +searchmedicalhistory():void
+    +reportADeath():void
+    +removePerson():void
+    +getMedicine():void
+}
+note left of patient::"fillMap()"
+    read database.
+end note
+note left of patient::"saveMap()"
+    write database.
+end note
+note left of patient::"writemedicialhistory()"
+    write database
+end note
+note left of patient::"searchmedicalhistory()"
+    read database
+end note
+note left of patient::"addPerson()"
+    write database.
+end note
+note left of patient::"printDetailsFromHistory(string)"
+    read database.
+end note
+class medicine
+{
+    -name:string
+    -id:int
+    -number:int
+    -remain:bool
+    +medicine()
+    +fillMap():void
+    +saveMap():void
+    +printDetails():void
+    +printDetailsFromHistory(string):void
+    +getDetails(int):void
+    +getDetailsFromHistory():void
+    +removeMedicine():void
+    +addMedicine():void
+    +sellMdeicine():void
+}
+note left of medicine::"fillMap()"
+    read database.
+end note
+note left of medicine::"saveMap()"
+    write database.
+end note
+note left of medicine::"addMedicine()"
+    write database.
+end note
+note left of medicine::"printDetailsFromHistory(string)"
+    read database.
+end note
+
+class advice{
+    -text:string
+    -id:int
+    -effect:bool
+    -doctorid:int
+    +medicine()
+    +fillMap():void
+    +saveMap():void
+    +printDetails():void
+    +printDetailsFromHistory(string):void
+    +getDetails(int):void
+    +getDetailsFromHistory():void
+    +removeAdvice():void
+    +addAdvice():void
+}
+note left of advice::"fillMap()"
+    read database.
+end note
+note left of advice::"saveMap()"
+    write database.
+end note
+note left of advice::"addAdvice()"
+    write database.
+end note
+note left of advice::"printDetailsFromHistory(string)"
+    read database.
+end note
+
+abstract class person
+{
+    #id:int
+    #firstName:string
+    #lastName:string
+    #gender:char
+    #age:int16_t
+    #mobNumber:string
+    #cat:string
+    #category:int
+    +person()
+    +{abstract} fillMap():void
+    +{abstract} saveMap():void
+    +{abstract} addPerson(int16_t, int16_t):void
+    +{abstract} printDetails():void
+    +{abstract} printDetailsFromHistory():void
+    +{abstract} getDetails(int):void
+    +{abstract} getDetailsFromHistory():void
+    +{abstract} removePerson():void
+}
+
+class hospital
+{
+    -{static} doctorsList:map<int, doctor>
+    -{static} patientsList:map<int, patient> 
+    -{static} nursesList:map<int, nurse>
+    -{static} driversList:map<int, driver>
+    -{static} ambulancesList:map<int, ambulance> 
+    -{static} appointmentsList:map<int, appointment>
+    -{static} medicineList:map<int, medicine> 
+    -{static} adviceList:map<int, advice> 
+
+    -{static} doctorsLimit:const int 
+    -{static} nursesLimit:const int 
+    -{static} driversLimit:const int 
+    -{static} ambulancesLimit:const int 
+    -{static} appointmentsLimit:const int 
+    -{static} medicineLimit:const int 
+    -{static} adviceLimit:const int 
+
+    +{static} printDoctors():void
+    +{static} printPatients():void
+    +{static} printNurses():void
+    +{static} printDrivers():void
+    +{static} printAmbulances():void
+    +{static} printAppointments():void
+    +{static} printMedicine():void
+    +{static} printAdvice():void
+}
+
+patient --|> person 
+
+nurse --|> person
+
+driver --|> person
+
+doctor --|> person
+
+hospital o-- doctor:聚合
+
+hospital o-- patient:聚合
+
+hospital o-- nurse:聚合
+
+hospital o-- driver:聚合
+
+hospital o-- ambulance:聚合
+
+hospital o--appointment:聚合
+
+hospital o-- medicine :聚合
+
+hospital o-- advice: 聚合
+
+ambulance --> driver
+
+person -->address
+
+ambulance -->address
+
+appointment --> patient
+
+appointment -->doctor
+
+medicine -->patient
+
+advice -->patient
+
+@enduml
