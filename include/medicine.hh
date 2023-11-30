@@ -10,7 +10,7 @@ protected:
     int id;
     string name;
     int number;
-    bool remain;
+    bool re;
 
 public:
     medicine();
@@ -19,9 +19,10 @@ public:
     void addMedicine();
     void printDetails();
     void printDetailsFromHistory();
-    void getDetails(int rec = 0);
+    void getDetails();
     void getDetailsFromHistory();
     void removeMedicine();
     void sellMedicine();
+    bool MMinus();
 };
 #endif

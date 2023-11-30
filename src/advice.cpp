@@ -66,12 +66,13 @@ void advice::addAdvice()
         cout << "\n\nAdvice limit reached, can't add more!\n\n";
         return;
     }
-    cout << "\nEnter DoctorID: \n";
+    cout << "\nEnter DoctorID: ";
     cin>>doctorid;
-    cout << "\nEnter PatienID: \n";
+    cout << "\nEnter PatientID: ";
     cin>>patientid;
-    cout << "\nEnter the content: \n";
+    cout << "\nEnter the content: ";
     cin>>text;
+    getchar();
     // cin.ignore(numeric_limits<streamsize>::max(), '\n'); // clearing cin buffer;
     if (hospital::adviceList.rbegin() != hospital::adviceList.rend())
         id = ((hospital::adviceList.rbegin())->first) + 1;
@@ -92,10 +93,13 @@ void advice::addAdvice()
 }
 void advice::printDetails()
 {
-    // if (id == -1)
-    //     return;
-    // person::printDetails();
-    // cout << "Type            : " << type << "\n";
+    if (id == -1&&effect==1)
+        return;
+    cout << "\nDetails:\n";
+    cout << "ID              : " << id << "\n";
+    cout << "DoctorID        : " << doctorid<< "\n";
+    cout << "PatientID       : " << patientid << "\n";
+    cout << "Contents        : " << text << "\n";
     return;
 }
 void advice::printDetailsFromHistory()
@@ -145,96 +149,61 @@ void advice::printDetailsFromHistory()
     //     cout << "Reason          : " << s2 << "\n";
     return;
 }
-void advice::getDetails(int rec)
+void advice::getDetails()
 {
-    // int opt = 0;
-    // cout << "\nOPTIONS:\n[1]: Filter by ID\n[2]: Filter by Name\n[3]: Filter by Type\n\n";
-    // cin >> opt;
-    // while (opt != 1 && opt != 2 && opt != 3)
-    //     cout << "option 1, 2 or 3?\n", cin >> opt;
-    // //1: Filter by ID;
-    // if (opt == 1)
-    // {
-    //     int reqId;
-    //     cout << "\nEnter ID:\n";
-    //     cin >> reqId;
-    //     if (hospital::nursesList.find(reqId) != hospital::nursesList.end())
-    //         *this = hospital::nursesList[reqId];
-    //     else
-    //         cout << "\nNo matching record found!\n";
-    // }
-    // //2: Filter by name;
-    // else if (opt == 2)
-    // {
-    //     string reqFName, reqLName;
-    //     cout << "First Name:\n";
-    //     getline(cin >> ws, reqFName);
-    //     cout << "\nLast Name:\n";
-    //     getline(cin, reqLName);
-    //     vector<nurse> matchingRecords;
-    //     for (auto i : hospital::nursesList)
-    //     {
-    //         if (i.second.firstName == reqFName && i.second.lastName == reqLName)
-    //             matchingRecords.push_back(i.second);
-    //     }
-    //     cout << "\n";
-    //     cout << matchingRecords.size() << " matching record(s) found!\n";
-    //     for (auto i : matchingRecords)
-    //         i.printDetails();
-    //     char tt = 'N';
-    //     if (matchingRecords.size() > rec)
-    //     {
-    //         do
-    //         {
-    //             int reqId;
-    //             cout << "\nEnter the ID of the required nurse: ";
-    //             cin >> reqId;
-    //             if (hospital::nursesList.find(reqId) != hospital::nursesList.end())
-    //                 *this = hospital::nursesList[reqId];
-    //             else
-    //             {
-    //                 cout << "\nInvalid ID!\nTry again? (Y = Yes || N = No)\n";
-    //                 cin >> tt;
-    //                 while (tt != 'Y' || tt != 'N')
-    //                     cout << "Y or N?\n", cin >> tt;
-    //             }
-    //         } while (tt == 'Y');
-    //     }
-    // }
-    // //3: Filter by type;
-    // else if (opt == 3)
-    // {
-    //     string reqType;
-    //     cout << "Enter the type of nurse required:\n";
-    //     getline(cin >> ws, reqType);
-    //     vector<nurse> matchingRecords;
-    //     for (auto i : hospital::nursesList)
-    //     {
-    //         if (i.second.type == reqType)
-    //             matchingRecords.push_back(i.second);
-    //     }
-    //     cout << "\n";
-    //     cout << matchingRecords.size() << " matching record(s) found!\n";
-    //     for (auto i : matchingRecords)
-    //         i.printDetails();
-    //     char tt = 'N';
-    //     if (matchingRecords.size() > 0)
-    //         do
-    //         {
-    //             int reqId;
-    //             cout << "\nEnter the ID of the required nurse: ";
-    //             cin >> reqId;
-    //             if (hospital::nursesList.find(reqId) != hospital::nursesList.end())
-    //                 *this = hospital::nursesList[reqId];
-    //             else
-    //             {
-    //                 cout << "\nInvalid ID!\nTry again? (Y = Yes || N = No)\n";
-    //                 cin >> tt;
-    //                 while (tt != 'Y' || tt != 'N')
-    //                     cout << "Y or N?\n", cin >> tt;
-    //             }
-    //         } while (tt == 'Y');
-    // }
+    int opt = 0;
+    cout << "\nOPTIONS:\n[1]: Filter by ID\n[2]: Filter by DoctorID\n[3]: Filter by PatientID\n\n";
+    cout << "option 1, 2 or 3?";
+    cin >> opt;
+    while (opt != 1 && opt != 2 && opt != 3){
+        cout << "option 1, 2 or 3?";
+        cin >> opt;
+    }
+    //1: Filter by ID;
+    if (opt == 1)
+    {
+        int reqId;
+        cout << "\nEnter ID:";
+        cin >> reqId;
+        int recorednumber=0;
+        for (auto i : hospital::adviceList){
+            if(i.second.id==reqId&&i.second.effect==1){
+                i.second.printDetails();
+                recorednumber++;
+            }
+        }
+        cout<<"\nFind "<<recorednumber<<" Records!\n";
+    }
+    //2: Filter by name;
+    else if (opt == 2)
+    {
+        int reqdoctorId;
+        cout << "\nEnter DoctorID:";
+        cin >> reqdoctorId;
+        int recorednumber=0;
+        for (auto i : hospital::adviceList){
+            if(i.second.doctorid==reqdoctorId&&i.second.effect==1){
+                i.second.printDetails();
+                recorednumber++;
+            }
+        }
+        cout<<"\nFind "<<recorednumber<<" Records!\n";
+    }
+    //3: Filter by type;
+    else if (opt == 3)
+    {
+        int reqpatientId;
+        cout << "\nEnter PatientID:";
+        cin >> reqpatientId;
+        int recorednumber=0;
+        for (auto i : hospital::adviceList){
+            if(i.second.patientid==reqpatientId&&i.second.effect==1){
+                i.second.printDetails();
+                recorednumber++;
+            }
+        }
+        cout<<"\nFind "<<recorednumber<<" Records!\n";
+    }
     return;
 }
 void advice::getDetailsFromHistory()
@@ -342,12 +311,12 @@ void advice::getDetailsFromHistory()
 }
 void advice::removeAdvice()
 {
-    cout << "\nEnter the ID of advice you want to remove.\n";
+    cout << "\nEnter the ID of advice you want to remove:";
     int tmp;
     cin>>tmp;
     getchar();
     if (tmp <=0||tmp>((hospital::adviceList.rbegin())->first)){
-        cout<<"\nInvaild ID\n";
+        cout<<"\nInvaild ID!\n";
         return;
     }
     for (auto i : hospital::adviceList){
@@ -355,6 +324,6 @@ void advice::removeAdvice()
             i.second.effect=0;
         }
     }
-       
+    cout<<"\nRemove Successfully!\n";
     return;
 }

@@ -14,93 +14,87 @@ medicine::medicine()
     id = -1;
     name = "";
     number = -1;
-    remain = 0;
+    re=0;
 }
 void medicine::fillMap()
 {
-    // fstream f;
-    // f.open("./data/medicine.csv", ios::in);
-    // string temp;
-    // //skipping the first row containing column headers;
-    // getline(f >> ws, temp);
-    // //analyzing each entry afterwards;
-    // while (getline(f >> ws, temp))
-    // {
-    //     medicine n;
-    //     //creating a string stream object to read from string 'temp';
-    //     stringstream s(temp);
-    //     string s1, s4, s5, s7;
-    //     //reading from the string stream object 's';
-    //     getline(s, s1, ',');
-    //     getline(s, n.firstName, ',');
-    //     getline(s, n.lastName, ',');
-    //     getline(s, s4, ',');
-    //     getline(s, s5, ',');
-    //     getline(s, n.mobNumber, ',');
-    //     getline(s, s7, ',');
-    //     getline(s, n.type, ',');
-    //     n.id = strToNum(s1);
-    //     n.gender = s4[0];
-    //     n.age = strToNum(s5);
-    //     n.add.strToAdd(s7);
-    //     hospital::nursesList[n.id] = n;
-    // }
-    // f.close();
+    fstream f;
+    f.open("./data/medicine.csv", ios::in);
+    string temp;
+    //skipping the first row containing column headers;
+    getline(f >> ws, temp);
+    //analyzing each entry afterwards;
+    while (getline(f >> ws, temp))
+    {
+        medicine n;
+        //creating a string stream object to read from string 'temp';
+        stringstream s(temp);
+        string s1, s2, s3, s4;
+        //reading from the string stream object 's';
+        getline(s, s1, ',');
+        getline(s, s2, ',');
+        getline(s, s3, ',');
+        getline(s,s4,',');
+        n.id = strToNum(s1);
+        n.name = s2;
+        n.number = strToNum(s3);
+        n.re=strToNum(s4);
+        hospital::medicineList[n.id] = n;
+    }
+    f.close();
     return;
 }
 void medicine::saveMap()
 {
-    // fstream f;
-    // f.open("./data/temp.csv", ios::out);
-    // // `le first line conataining column headers:
-    // f << "nurseId,firstName,lastName,gender,age,mobNumber,address,type\n";
-    // for (auto i : hospital::nursesList)
-    //     f << i.second.id << "," << i.second.firstName << "," << i.second.lastName << "," << i.second.gender
-    //       << "," << i.second.age << "," << i.second.mobNumber << "," << i.second.add.addToStr()
-    //       << "," << i.second.type << endl;
-    // f.close();
-    // remove("./data/nurses.csv");
-    // rename("./data/temp.csv", "./data/nurses.csv");
+    fstream f;
+    f.open("./data/temp.csv", ios::out);
+    // `le first line conataining column headers:
+    f << "medicineId,Name,Number,Remove\n";
+    for (auto i : hospital::medicineList)
+        f << i.second.id << "," << i.second.name << "," << i.second.number<<","<<i.second.re<< endl;
+    f.close();
+    remove("./data/medicine.csv");
+    rename("./data/temp.csv", "./data/medicine.csv");
     return;
 }
 void medicine::addMedicine()
 {
-    // if (hospital::nursesList.size() == hospital::nursesLimit)
-    // {
-    //     cout << "\n\nNurses limit reached, can't add more!\n\n";
-    //     return;
-    // }
-    // //18 and 65 are the age limits for registration of a new nurse;
-    // person::addPerson(18, 65);
-    // if ((age < 18) || (age > 65))
-    //     return;
-    // cout << "\nEnter the type of the nurse: \n";
-    // getline(cin >> ws, type);
-    // if (hospital::nursesList.rbegin() != hospital::nursesList.rend())
-    //     id = ((hospital::nursesList.rbegin())->first) + 1;
-    // else
-    //     id = 1;
-    // hospital::nursesList[id] = *this;
+     if (hospital::medicineList.size() == hospital::medicineLimit)
+    {
+        cout << "\n\nMedicine limit reached, can't add more!\n\n";
+        return;
+    }
+    cout << "\nEnter Name: \n";
+    cin>>name;
+    cout << "\nEnter Number: \n";
+    cin>>number;
+    getchar();
+    // cin.ignore(numeric_limits<streamsize>::max(), '\n'); // clearing cin buffer;
+    if (hospital::medicineList.rbegin() != hospital::medicineList.rend())
+        id = ((hospital::medicineList.rbegin())->first) + 1;
+    else
+        id = 1;
+    re=0;
+    hospital::medicineList[id] = *this;
 
-    // //creating a fstream object to read/write from/to files;
-    // fstream f;
-    // //creating a record in nursesHistory.csv;
-    // f.open("./data/nursesHistory.csv", ios::app);
-    // f << firstName << "," << lastName << "," << gender << "," << age << "," << mobNumber << "," << add.addToStr() << "," << type << ",N,NA" << endl;
-    // f.close();
+    fstream f;
+    f.open("./data/adviceHistory.csv", ios::app);
+    f << id << "," << name << "," << number << endl;
+    f.close();
 
-    // cout << "\n"
-    //      << firstName << " " << lastName << " registered successfully!\n";
-    // cout << "Their ID is: " << id << "\n";
+    cout << "\nAdd successfully!\n";
+    cout << "ID is: " << id << "\n";
 
     return;
 }
 void medicine::printDetails()
 {
-    // if (id == -1)
-    //     return;
-    // person::printDetails();
-    // cout << "Type            : " << type << "\n";
+    if (id == -1&&re==0)
+         return;
+    cout << "\nDetails:\n";
+    cout << "ID              : " << id << "\n";
+    cout << "Name            : " << name << "\n";
+    cout << "Number          : " << number << "\n";
     return;
 }
 void medicine::printDetailsFromHistory()
@@ -150,96 +144,46 @@ void medicine::printDetailsFromHistory()
     //     cout << "Reason          : " << s2 << "\n";
     return;
 }
-void medicine::getDetails(int rec)
+void medicine::getDetails()
 {
-    // int opt = 0;
-    // cout << "\nOPTIONS:\n[1]: Filter by ID\n[2]: Filter by Name\n[3]: Filter by Type\n\n";
-    // cin >> opt;
-    // while (opt != 1 && opt != 2 && opt != 3)
-    //     cout << "option 1, 2 or 3?\n", cin >> opt;
-    // //1: Filter by ID;
-    // if (opt == 1)
-    // {
-    //     int reqId;
-    //     cout << "\nEnter ID:\n";
-    //     cin >> reqId;
-    //     if (hospital::nursesList.find(reqId) != hospital::nursesList.end())
-    //         *this = hospital::nursesList[reqId];
-    //     else
-    //         cout << "\nNo matching record found!\n";
-    // }
-    // //2: Filter by name;
-    // else if (opt == 2)
-    // {
-    //     string reqFName, reqLName;
-    //     cout << "First Name:\n";
-    //     getline(cin >> ws, reqFName);
-    //     cout << "\nLast Name:\n";
-    //     getline(cin, reqLName);
-    //     vector<nurse> matchingRecords;
-    //     for (auto i : hospital::nursesList)
-    //     {
-    //         if (i.second.firstName == reqFName && i.second.lastName == reqLName)
-    //             matchingRecords.push_back(i.second);
-    //     }
-    //     cout << "\n";
-    //     cout << matchingRecords.size() << " matching record(s) found!\n";
-    //     for (auto i : matchingRecords)
-    //         i.printDetails();
-    //     char tt = 'N';
-    //     if (matchingRecords.size() > rec)
-    //     {
-    //         do
-    //         {
-    //             int reqId;
-    //             cout << "\nEnter the ID of the required nurse: ";
-    //             cin >> reqId;
-    //             if (hospital::nursesList.find(reqId) != hospital::nursesList.end())
-    //                 *this = hospital::nursesList[reqId];
-    //             else
-    //             {
-    //                 cout << "\nInvalid ID!\nTry again? (Y = Yes || N = No)\n";
-    //                 cin >> tt;
-    //                 while (tt != 'Y' || tt != 'N')
-    //                     cout << "Y or N?\n", cin >> tt;
-    //             }
-    //         } while (tt == 'Y');
-    //     }
-    // }
-    // //3: Filter by type;
-    // else if (opt == 3)
-    // {
-    //     string reqType;
-    //     cout << "Enter the type of nurse required:\n";
-    //     getline(cin >> ws, reqType);
-    //     vector<nurse> matchingRecords;
-    //     for (auto i : hospital::nursesList)
-    //     {
-    //         if (i.second.type == reqType)
-    //             matchingRecords.push_back(i.second);
-    //     }
-    //     cout << "\n";
-    //     cout << matchingRecords.size() << " matching record(s) found!\n";
-    //     for (auto i : matchingRecords)
-    //         i.printDetails();
-    //     char tt = 'N';
-    //     if (matchingRecords.size() > 0)
-    //         do
-    //         {
-    //             int reqId;
-    //             cout << "\nEnter the ID of the required nurse: ";
-    //             cin >> reqId;
-    //             if (hospital::nursesList.find(reqId) != hospital::nursesList.end())
-    //                 *this = hospital::nursesList[reqId];
-    //             else
-    //             {
-    //                 cout << "\nInvalid ID!\nTry again? (Y = Yes || N = No)\n";
-    //                 cin >> tt;
-    //                 while (tt != 'Y' || tt != 'N')
-    //                     cout << "Y or N?\n", cin >> tt;
-    //             }
-    //         } while (tt == 'Y');
-    // }
+    int opt = 0;
+    cout << "\nOPTIONS:\n[1]: Filter by ID\n[2]: Filter by Name\n";
+    cout << "option 1or2?";
+    cin >> opt;
+    while (opt != 1 && opt != 2 ){
+        cout << "option 1or2?";
+        cin >> opt;
+    }
+    //1: Filter by ID;
+    if (opt == 1)
+    {
+        int reqId;
+        cout << "\nEnter ID:\n";
+        cin >> reqId;
+        int recorednumber=0;
+        for (auto i : hospital::medicineList){
+            if(i.second.id==reqId&&i.second.re==0){
+                i.second.printDetails();
+                recorednumber++;
+            }
+        }
+        cout<<"\nFind "<<recorednumber<<" Records!\n";
+    }
+    //2: Filter by name;
+    else if (opt == 2)
+    {
+        string reqName;
+        cout << "\nEnter Name:\n";
+        cin >> reqName;
+        int recorednumber=0;
+        for (auto i : hospital::medicineList){
+            if(i.second.name==reqName&&i.second.re==0){
+                i.second.printDetails();
+                recorednumber++;
+            }
+        }
+        cout<<"\nFind "<<recorednumber<<" Records!\n";
+    }
     return;
 }
 void medicine ::getDetailsFromHistory()
@@ -347,39 +291,53 @@ void medicine ::getDetailsFromHistory()
 }
 void medicine::removeMedicine()
 {
-    // cout << "\nSearch for the nurse you want to remove.\n";
-    // getDetails();
-    // if (id == -1)
-    //     return;
-    // hospital::nursesList.erase(id);
-
-    // string s, temp;
-    // stringstream str;
-    // fstream f, fout;
-    // string reason;
-    // cout << "\nReason?\n";
-    // getline(cin >> ws, reason);
-    // str << firstName << "," << lastName << "," << gender << "," << age
-    //     << "," << mobNumber << "," << add.addToStr() << "," << type << ",N,NA\n";
-    // getline(str, s);
-    // f.open("./data/nursesHistory.csv", ios::in);
-    // fout.open("./data/temp.csv", ios::out);
-    // while (getline(f, temp))
-    // {
-    //     if (temp == s)
-    //     {
-    //         fout << firstName << "," << lastName << "," << gender << "," << age
-    //              << "," << mobNumber << "," << add.addToStr() << "," << type << ",Y," << reason << "\n";
-    //     }
-    //     else
-    //         fout << temp << "\n";
-    // }
-    // f.close();
-    // fout.close();
-    // s.erase();
-    // temp.erase();
-    // remove("./data/nursesHistory.csv");
-    // rename("./data/temp.csv", "./data/nursesHistory.csv");
-    // cout << firstName << " " << lastName << " removed successfully!\n";
+    cout << "\nEnter the ID of advice you want to remove.\n";
+    int tmp;
+    cin>>tmp;
+    getchar();
+    if (tmp <=0||tmp>((hospital::medicineList.rbegin())->first)){
+        cout<<"\nInvaild ID\n";
+        return;
+    }
+    for (auto i : hospital::medicineList){
+        if(i.second.id==tmp){
+            i.second.re=1;
+        }
+    }
+    cout<<"\nRemove Successfully!\n";
     return;
+}
+void medicine::sellMedicine(){
+    int reqId;
+    cout << "\nEnter ID:\n";
+    cin >> reqId;
+    int recorednumber=0;
+    for (auto i : hospital::medicineList){
+        if(i.second.id==reqId&&i.second.re==0){
+            i.second.printDetails();
+            if(i.second.MMinus()==1){
+                cout<<"\nSuccessfully!\n";
+            }
+            else{
+                cout<<"\nThere isn't enough medicine!\n";
+            }
+        }
+    }
+    if(recorednumber==0){
+        cout<<"\nInvalid ID!\n";
+    }
+    return;
+}
+bool medicine::MMinus(){
+    int reqnum;
+    cout<<"\nEnter your request:";
+    cin>>reqnum;
+    if(number<=reqnum){
+        number-=reqnum;
+        return 1;
+    }
+    else{
+        return 0;
+    }
+
 }

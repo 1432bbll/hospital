@@ -480,8 +480,7 @@ void medicineMenu()
         else if (purpose == 3)
         {
             medicine m;
-            m.getDetails(1);
-            m.printDetails();
+            m.getDetails();
         }
         else if (purpose == 4)
         {
@@ -525,11 +524,9 @@ void adviceMenu()
         cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
         cout << "./HOME/ADVICE\n";
         cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
-        cout << "[01] : Add medicine\n";
-        cout << "[02] : Serarch medicine\n";
-        cout << "[03] : Get medicine details\n";
-        cout << "[04] : Give out medicine\n";
-        cout << "[05] : Remove medicine\n";
+        cout << "[01] : Add advice\n";
+        cout << "[02] : Serarch advice\n";
+        cout << "[03] : Remove advice\n";
         cout << "[-1] : Back\n";
         cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
         cout << "Enter your choice: ";
@@ -548,18 +545,7 @@ void adviceMenu()
         else if (purpose == 3)
         {
             advice a;
-            a.getDetails(1);
-            a.printDetails();
-        }
-        else if (purpose == 4)
-        {
-            ambulance a;
-            a.reportArrival();
-        }
-        else if (purpose == 5)
-        {
-            ambulance a;
-            a.removeAmbulance();
+            a.removeAdvice();
         }
         else if (purpose == -1)
         {
@@ -693,9 +679,9 @@ int main()
         cout << "[03] : DOCTORS\n";
         cout << "[04] : NURSES\n";
         cout << "[05] : DRIVERS\n";
-        cout << "[06] : AMBULANCES\n\n";
-        cout << "[07] : MEDICINE\n\n";
-        cout << "[08] : ADVICE\n\n";
+        cout << "[06] : AMBULANCES\n";
+        cout << "[07] : MEDICINE\n";
+        cout << "[08] : ADVICE\n";
         cout << "[-1] : EXIT\n";
         cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n";
         cout << "Enter your choice: ";

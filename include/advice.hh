@@ -20,7 +20,7 @@ public:
     void addAdvice();
     void printDetails();
     void printDetailsFromHistory();
-    void getDetails(int rec = 0);
+    void getDetails();
     void getDetailsFromHistory();
     void removeAdvice();
 };
